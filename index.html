@@ -55,6 +55,10 @@
             const maxRange = 0.5;
             const maxProutism = 5; // 5/7
 
+            if (newProutism > maxProutism) {
+                newProutism = maxProutism;
+            }
+
             const transform = newProutism / maxProutism * maxRange;
             proutometer.style.transform = `rotate(${transform}turn)`;
 
