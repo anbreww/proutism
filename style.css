@@ -67,11 +67,21 @@ body {
 /* The part that moves, starts 180deg below the gauge */
 
 .meter {
-    top: 100%;
+    /*top: 100%;
     transition: 0.5s;
     transform-origin: center top;
     border-radius: 0 0 12rem 12rem;
-    background: deepskyblue;
+    background: deepskyblue;*/
+    top: calc(100% - 20px);
+    transition: 0.5s;
+    transform-origin: right center;
+    /* border-radius: 0 0 12rem 12rem; */
+    /* background: deepskyblue; */
+    border-style: solid;
+    border-width: 19px 10rem 20px 0;
+    border-color: transparent deepskyblue transparent transparent;
+    width: 0;
+    height: 0;
 }
 
 figure {
