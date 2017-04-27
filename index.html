@@ -1,0 +1,66 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Proutometer</title>
+    <meta name="description" content="Gauge the level of proutisme">
+    <meta name="author" content="Andrew Watson">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div id="wrapper">
+        <div id="proutometer-container">
+
+            <figure>
+                <div class="proutometer">
+                    <div class="meter"></div>
+                </div>
+                <figcaption id="proutism">Loading proutism...</p>
+            </figure>
+        </div>
+    </div>
+
+
+    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyClh6e0g2sDIY95XX_Jw2AsMrhoT_tqEw4",
+            authDomain: "proutometer.firebaseapp.com",
+            databaseURL: "https://proutometer.firebaseio.com",
+            projectId: "proutometer",
+            storageBucket: "proutometer.appspot.com",
+            messagingSenderId: "741316702908"
+        };
+        firebase.initializeApp(config);
+
+        var proutismRef = firebase.database().ref('proutism');
+        proutismRef.on('value', function(snapshot) {
+            updateProutism(snapshot.val());
+        })
+
+        function updateProutism(newProutism) {
+            const proutism = document.querySelector('#proutism');
+            status = `Proutism is ${newProutism}/7.`
+            proutism.innerHTML = status;
+
+            const proutometer = document.querySelector(".meter");
+
+            const maxRange = 0.5;
+            const maxProutism = 5; // 5/7
+
+            const transform = newProutism / maxProutism * maxRange;
+            proutometer.style.transform = `rotate(${transform}turn)`;
+
+        }
+    </script>
+    <script src="scripts.js"></script>
+</body>
+
+</html>

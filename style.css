@@ -1,0 +1,89 @@
+#wrapper,
+body {
+    min-height: 100vh;
+    background-color: #222;
+    margin: 0;
+}
+
+#wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#proutometer-container {
+    flex: 0 1 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    width: 200px;
+}
+
+.proutometer {
+    display: inline-block;
+    position: relative;
+    width: 20rem;
+    height: 10em;
+    overflow: hidden;
+    margin: 4rem;
+}
+
+.proutometer:before,
+.proutometer:after,
+.meter {
+    position: absolute;
+    display: block;
+    content: "";
+}
+
+.proutometer:before,
+.meter {
+    width: 20rem;
+    height: 10rem;
+}
+
+
+/* grey rounded background */
+
+.proutometer:before {
+    border-radius: 10rem 10rem 0 0;
+    background: #2a2a2a;
+}
+
+
+/* round bit at the bottom, same colour as page background */
+
+.proutometer:after {
+    position: absolute;
+    bottom: 0;
+    left: 6rem;
+    width: 8rem;
+    height: 4rem;
+    background: #222;
+    border-radius: 4rem 4rem 0 0;
+}
+
+
+/* The part that moves, starts 180deg below the gauge */
+
+.meter {
+    top: 100%;
+    transition: 0.5s;
+    transform-origin: center top;
+    border-radius: 0 0 12rem 12rem;
+    background: deepskyblue;
+}
+
+figure {
+    flex: 1;
+    text-align: center;
+}
+
+figcaption {
+    display: block;
+    font: 20pt monospace;
+    color: #777;
+    user-select: none;
+}
