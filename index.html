@@ -24,12 +24,15 @@
                     <div class="meter"></div>
                 </div>
                 <figcaption id="proutism">Loading proutism...</figcaption>
+                <div id="author"></div>
             </figure>
+
         </div>
     </div>
 
 
     <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script>
         // Initialize Firebase
         var config = {
@@ -42,14 +45,18 @@
         };
         firebase.initializeApp(config);
 
-        var proutismRef = firebase.database().ref('proutism');
+        var proutismRef = firebase.database().ref('/');
         proutismRef.on('value', function(snapshot) {
-            updateProutism(snapshot.val());
+            prout = snapshot.val();
+            updateProutism(prout.proutism, prout.author, prout.timestamp);
         })
 
-        function updateProutism(newProutism) {
+        function updateProutism(newProutism, author, timestamp) {
+            let {value, text} = normalizeTheProut(newProutism)
+            console.log({value, text})
+
             const proutism = document.querySelector('#proutism');
-            status = `Proutism is ${newProutism}/7.`
+            status = `Proutism is ${text}/7.`
             proutism.innerHTML = status;
 
             const proutometer = document.querySelector(".meter");
@@ -57,13 +64,36 @@
             const maxRange = 0.5;
             const maxProutism = 5; // 5/7
 
-            if (newProutism > maxProutism) {
-                newProutism = maxProutism;
+            if (value > maxProutism) {
+                value = maxProutism;
             }
 
-            const transform = newProutism / maxProutism * maxRange;
+            const transform = value / maxProutism * maxRange;
             proutometer.style.transform = `rotate(${transform}turn)`;
 
+            let timeAgo = moment(timestamp).fromNow();
+            const author_div = document.querySelector('#author');
+            author_div.innerHTML = `Last set by ${author} ${timeAgo}`
+        }
+
+        function normalizeTheProut(proutism) {
+            const prout = {
+                text: proutism,
+                value: proutism,
+            }
+
+            if (isNaN(proutism)) {
+                // not a number
+                // normalize to 5 for now
+                if (prout.text.match(/low/gi)) {
+                    prout.value = 1;
+                } else {
+                    prout.value = 5;
+                }
+                prout.text = proutism.substr(0, 20);
+            }
+
+            return prout;
         }
 
         (function(i, s, o, g, r, a, m) {
@@ -80,7 +110,6 @@
 
         ga('create', 'UA-98266705-1', 'auto');
         ga('send', 'pageview');
-    </script>
     </script>
     <script src="scripts.js"></script>
 </body>

@@ -95,3 +95,12 @@ figcaption {
     color: #777;
     user-select: none;
 }
+
+#author {
+    display: block;
+    font: 10pt monospace;
+    color: #555;
+    font-style: italic;
+    padding-top: 2rem;
+    min-height: 1rem;
+}
