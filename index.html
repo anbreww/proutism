@@ -45,7 +45,7 @@
         };
         firebase.initializeApp(config);
 
-        var proutismRef = firebase.database().ref('/');
+        var proutismRef = firebase.database().ref('/proutism');
         proutismRef.on('value', function(snapshot) {
             prout = snapshot.val();
             updateProutism(prout.proutism, prout.author, prout.timestamp);
